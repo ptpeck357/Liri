@@ -1,3 +1,13 @@
+console.log("Command: my-tweets - Get your recent tweet posts from twitter");
+
+console.log("Command: movie-this - Get basic information about a movie");
+
+console.log("Command: spotify-this-song - Get the artist, song name, link preview, and what album it comes from");
+
+console.log("Command: do-what-it-says - Get your recent tweet posts from twitter");
+
+console.log("");
+
 //FS package to read, write, rename files
 var fs = require("fs");
 
@@ -9,6 +19,10 @@ var twitter = require("twitter");
 
 //Importing keys for twitter to access twitter
 var config = require('./keys');
+
+var APIClinet = require('omdb-api-client');
+
+var omdb = new APIClinet();
 
 var t = new twitter(config);
 
@@ -27,7 +41,17 @@ var spotifyKeys = {
 
 //Getting the 2nd index of the argument
 for (var i = 2; i < nodeArgs.length; i++) {
-	usersInput = usersInput + nodeArgs[i];
+
+	if (i > 2 && i < nodeArgs.length) {
+
+    	usersInput = usersInput + "+" + nodeArgs[i];
+
+  	} else {	
+
+		usersInput += nodeArgs[i];
+
+	}
+
 };
 
 if(usersInput === "my-tweets"){
@@ -42,7 +66,11 @@ else if(usersInput === "movie-this"){
 	findMovie();
 }
 
-else(console.log("Command not found."))
+else if(usersInput === "do-what-it-says"){
+	dowhatitsays();
+}
+
+else(console.log("Command not found."));
 
 
 
@@ -51,7 +79,7 @@ function mytweets(){
 	var prams = {
 		name: 'Peter Peck',
 		screen_name: 'pt_peck357'
-	}
+	};
 
 	t.get('statuses/user_timeline', prams, function(error, tweets) {
 
@@ -64,19 +92,19 @@ function mytweets(){
 			console.log("Created at " + tweets[i].created_at);
 
 			console.log("");			
-		}
+		};
 
 	});
-}
+};
 
 function spotify(){
 
-}
+};
 
 function findMovie(){
 
 	// Then run a request to the OMDB API with the movie specified
-	var queryUrl = "http://www.omdbapi.com/?t=" + usersInput + "&y=&plot=short&apikey=40e9cece";
+	var queryUrl = "http://www.omdbapi.com/?t=" + usersInput + "&apikey=40e9cece";
 
 	console.log(queryUrl);
 
@@ -88,6 +116,10 @@ function findMovie(){
 			console.log("Release Year: " + JSON.parse(body).Year);
 
 		}
-		
+
 	});
-}
+};
+
+function dowhatitsays(){
+
+};
