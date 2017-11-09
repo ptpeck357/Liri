@@ -54,6 +54,7 @@ for (var i = 2; i < nodeArgs.length; i++) {
 
 };
 
+
 if(usersInput === "my-tweets"){
 	mytweets();
 }
@@ -70,7 +71,9 @@ else if(usersInput === "do-what-it-says"){
 	dowhatitsays();
 }
 
-else(console.log("Command not found."));
+else(
+	console.log("Command not found.")
+);
 
 
 
