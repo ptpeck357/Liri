@@ -23,7 +23,7 @@ var usersInput = "";
 var spotifyKeys = {
 	Client_ID: '17aab725b284462aacfd997301bd07a1',
 	Client_Secret: '5f242864dd51446bbb52a6689191de3e'
-}
+};
 
 //Getting the 2nd index of the argument
 for (var i = 2; i < nodeArgs.length; i++) {
@@ -57,9 +57,12 @@ function mytweets(){
 
 		if(error) throw error;
 
-		for (var i = 0; i <20; i++) {
-			console.log((i+1)+"." + " Tweet " + tweets[i].text)
+		for (var i = 0; i < 20; i++) {
+
+			console.log((i+1) + "." + " Tweet: " + tweets[i].text)
+
 			console.log("Created at " + tweets[i].created_at);
+
 			console.log("");			
 		}
 
@@ -72,4 +75,19 @@ function spotify(){
 
 function findMovie(){
 
+	// Then run a request to the OMDB API with the movie specified
+	var queryUrl = "http://www.omdbapi.com/?t=" + usersInput + "&y=&plot=short&apikey=40e9cece";
+
+	console.log(queryUrl);
+
+	request(queryUrl, function(error, response, body) {
+
+		// If the request is successful
+		if (!error && response.statusCode === 200) {
+
+			console.log("Release Year: " + JSON.parse(body).Year);
+
+		}
+		
+	});
 }
