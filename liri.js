@@ -1,22 +1,23 @@
 //FS package to read, write, rename files
 var fs = require("fs");
 
-//Importing keys for twitter to access twitter
-var twitterKeys = require('./keys');
-
 //Node package to make HTTP requests
 var request = require("request");
 
 //Node package to access twitter api 
-var twitter = require('twitter');
+var twitter = require("twitter");
+
+//Importing keys for twitter to access twitter
+var config = require('./keys');
+
+var t = new twitter(config);
 
 //The user's input in GitBash
 var nodeArgs = process.argv;
 
 //Taking out the word "node" and file name in argument string
-nodeArgs.slice(2);
 
-var usersInput = " ";
+var usersInput = "";
 
 //Spotify API information
 var spotifyKeys = {
@@ -24,8 +25,9 @@ var spotifyKeys = {
 	Client_Secret: '5f242864dd51446bbb52a6689191de3e'
 }
 
-for (var i = 0; i < nodeArgs.length; i++) {
-	usersInput = usersInput + " " + nodeArgs[i];
+//Getting the 2nd index of the argument
+for (var i = 2; i < nodeArgs.length; i++) {
+	usersInput = usersInput + nodeArgs[i];
 };
 
 if(usersInput === "my-tweets"){
@@ -40,10 +42,28 @@ else if(usersInput === "movie-this"){
 	findMovie();
 }
 
-else(console.log("Commands not found."))
+else(console.log("Command not found."))
+
+
 
 function mytweets(){
 
+	var prams = {
+		name: 'Peter Peck',
+		screen_name: 'pt_peck357'
+	}
+
+	t.get('statuses/user_timeline', prams, function(error, tweets) {
+
+		if(error) throw error;
+
+		for (var i = 0; i <20; i++) {
+			console.log((i+1)+"." + " Tweet " + tweets[i].text)
+			console.log("Created at " + tweets[i].created_at);
+			console.log("");			
+		}
+
+	});
 }
 
 function spotify(){
