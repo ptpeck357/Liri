@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ptpeck357/Node#readme",
   "dependencies": {
     "moment": "^2.19.1",
+    "node-spotify-api": "^1.0.7",
     "omdb-api-client": "^2.0.1",
     "request": "^2.83.0",
     "twitter": "^1.7.1"
