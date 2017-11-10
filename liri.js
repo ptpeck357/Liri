@@ -1,18 +1,10 @@
-console.log("Command: my-tweets - Get your recent tweet posts from twitter");
-
-console.log("Command: movie-this - Get basic information about a movie");
-
-console.log("Command: spotify-this-song - Get the artist, song name, link preview, and what album it comes from");
-
-console.log("Command: do-what-it-says - Get your recent tweet posts from twitter");
-
-console.log("");
-
 //FS package to read, write, rename files
 var fs = require("fs");
 
 //Node package to make HTTP requests
 var request = require("request");
+
+var moment = require("moment")
 
 //Node package to access twitter api 
 var twitter = require("twitter");
@@ -20,13 +12,9 @@ var twitter = require("twitter");
 //Importing keys for twitter to access twitter
 var config = require('./keys');
 
-var APIClinet = require('omdb-api-client');
-
-var omdb = new APIClinet();
-
 var t = new twitter(config);
 
-//The user's input in GitBash
+//The user's input 
 var nodeArgs = process.argv;
 
 //Taking out the word "node" and file name in argument string
@@ -40,9 +28,9 @@ var spotifyKeys = {
 };
 
 //Getting the 2nd index of the argument
-for (var i = 2; i < nodeArgs.length; i++) {
+for (var i = 3; i < nodeArgs.length; i++) {
 
-	if (i > 2 && i < nodeArgs.length) {
+	if (i > 3 && i < nodeArgs.length) {
 
     	usersInput = usersInput + "+" + nodeArgs[i];
 
@@ -55,19 +43,19 @@ for (var i = 2; i < nodeArgs.length; i++) {
 };
 
 
-if(usersInput === "my-tweets"){
+if(nodeArgs[2] === "my-tweets"){
 	mytweets();
 }
 
-else if(usersInput === "spotify-this-song"){
+else if(nodeArgs[2] === "spotify-this-song"){
 	spotify();
 }
 
-else if(usersInput === "movie-this"){
+else if(nodeArgs[2] === "movie-this"){
 	findMovie();
 }
 
-else if(usersInput === "do-what-it-says"){
+else if(nodeArgs[2] === "do-what-it-says"){
 	dowhatitsays();
 }
 
@@ -76,7 +64,7 @@ else(
 );
 
 
-
+//Twitter function
 function mytweets(){
 
 	var prams = {
@@ -84,7 +72,7 @@ function mytweets(){
 		screen_name: 'pt_peck357'
 	};
 
-	t.get('statuses/user_timeline', prams, function(error, tweets) {
+	t.get('statuses/user_timeline', prams, function(error, tweets, response) {
 
 		if(error) throw error;
 
@@ -92,7 +80,7 @@ function mytweets(){
 
 			console.log((i+1) + "." + " Tweet: " + tweets[i].text)
 
-			console.log("Created at " + tweets[i].created_at);
+			console.log("Created at " + moment(tweets[i].created_at).format('MMMM Do, YYYY'));
 
 			console.log("");			
 		};
@@ -109,18 +97,25 @@ function findMovie(){
 	// Then run a request to the OMDB API with the movie specified
 	var queryUrl = "http://www.omdbapi.com/?t=" + usersInput + "&apikey=40e9cece";
 
-	console.log(queryUrl);
-
 	request(queryUrl, function(error, response, body) {
 
 		// If the request is successful
 		if (!error && response.statusCode === 200) {
 
-			console.log("Release Year: " + JSON.parse(body).Year);
+			//Console logging each piece of information about the movie line for line
+			console.log("Title: " + JSON.parse(body).Title);
+			console.log("Release Date: " + JSON.parse(body).Year);
+			console.log("IMDB Rating: " + JSON.parse(body).imdbRating +"/10");
+			console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[i].Value);
+			console.log("Country Produced: " + JSON.parse(body).Country);
+			console.log("Language: " + JSON.parse(body).Language);
+			console.log("Plot: " + JSON.parse(body).Plot);
+			console.log("Actors: " + JSON.parse(body).Actors);
 
 		}
 
 	});
+
 };
 
 function dowhatitsays(){
