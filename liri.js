@@ -5,7 +5,7 @@ var fs = require("fs");
 var request = require("request");
 
 //Node package to access moment 
-var moment = require("moment")
+var moment = require("moment");
 
 //Node package to access twitter api 
 var twitter = require("twitter");
@@ -14,9 +14,7 @@ var twitter = require("twitter");
 var spotifySearch = require('node-spotify-api');
 
 var spotify = new spotifySearch({
-
 	id: '17aab725b284462aacfd997301bd07a1',
-
 	secret: '5f242864dd51446bbb52a6689191de3e'
 
 });
@@ -35,14 +33,10 @@ var usersInput = "";
 for (var i = 3; i < nodeArgs.length; i++) {
 
 	if (i > 3 && i < nodeArgs.length) {
-
     	usersInput = usersInput + "+" + nodeArgs[i];
-
   	} else {	
-
 		usersInput += nodeArgs[i];
-
-	}
+	};
 
 };
 
@@ -82,11 +76,9 @@ for (var i = 3; i < nodeArgs.length; i++) {
 			if(error) throw error;
 
 			for (var i = 0; i < tweets.length; i++) {
-
 				console.log((i+1) + "." + " Tweet: " + tweets[i].text);
-
-				console.log("Created at " + moment(tweets[i].created_at).format('MMMM DD, YYYY'));
-
+				console.log("Created at " + moment(tweets[i].created_at).format('MMMM Do YYYY'));
+				console.log(tweets[i].created_at)
 				console.log("");	
 
 			};
@@ -99,13 +91,11 @@ for (var i = 3; i < nodeArgs.length; i++) {
 
 	function findSong(){
 
-		spotify.search({ type: 'track', query: usersInput, limit: 10}, function(err, data) {
+		spotify.search({ type: 'track', query: usersInput, limit: 1}, function(err, data) {
 
 		  	if (err) {
-
 		    	return console.log('Error occurred: ' + err);
-
-		  	}
+		  	};
 
 			console.log("Artist/Band: " + data.tracks.items[0].artists[0].name);
 			console.log("Song Title: " + data.tracks.items[0].name);
@@ -137,7 +127,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
 				console.log("Plot: " + JSON.parse(body).Plot);
 				console.log("Actors: " + JSON.parse(body).Actors);
 
-			}
+			};
 
 		});
 
@@ -148,7 +138,8 @@ for (var i = 3; i < nodeArgs.length; i++) {
 
 	function dowhatitsays(){
 
-		var userString = "";
+		var command = "";
+		var arg = "";
 
 		fs.readFile("random.txt", "utf8", function(error, data) {
 
@@ -160,12 +151,11 @@ for (var i = 3; i < nodeArgs.length; i++) {
 		var dataArray = data.split(",");
 
 			for (var i = 0; i < dataArray.length; i++){
-
-				userString = dataArray[i];
-
-				console.log(userString);
-
-			}
+				command = dataArray[0];
+				// arg = dataArray[1]
+				console.log(command)
+				// console.log(arg)
+			};
 		
 		});
 
