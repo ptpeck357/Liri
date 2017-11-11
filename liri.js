@@ -29,6 +29,14 @@ var nodeArgs = process.argv;
 
 var usersInput = "";
 
+fs.appendFile("log.txt", nodeArgs[2] + ", ", function(err){
+
+	if (err) {
+		console.log(err)
+		return;
+	} 
+});
+
 //Getting the 3rd index of the argument
 for (var i = 3; i < nodeArgs.length; i++) {
 
@@ -79,7 +87,6 @@ for (var i = 3; i < nodeArgs.length; i++) {
 			for (var i = 0; i < tweets.length; i++) {
 				console.log((i+1) + "." + " Tweet: " + tweets[i].text);
 				console.log("Created at " + moment(tweets[i].created_at).format('MMMM Do YYYY'));
-				console.log(tweets[i].created_at)
 				console.log("");	
 
 			};
