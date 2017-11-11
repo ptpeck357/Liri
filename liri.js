@@ -46,11 +46,11 @@ for (var i = 3; i < nodeArgs.length; i++) {
 	}
 
 	else if(nodeArgs[2] === "spotify-this-song"){
-		findSong();
+		findSong(usersInput);
 	}
 
 	else if(nodeArgs[2] === "movie-this"){
-		findMovie();
+		findMovie(usersInput);
 	}
 
 	else if(nodeArgs[2] === "do-what-it-says"){
@@ -68,7 +68,8 @@ for (var i = 3; i < nodeArgs.length; i++) {
 
 		var prams = {
 			name: 'Peter Peck',
-			screen_name: 'pt_peck357'
+			screen_name: 'pt_peck357',
+			limit: 20
 		};
 
 		t.get('statuses/user_timeline', prams, function(error, tweets, response) {
@@ -89,9 +90,9 @@ for (var i = 3; i < nodeArgs.length; i++) {
 
 
 
-	function findSong(){
+	function findSong(usersInput){
 
-		spotify.search({ type: 'track', query: usersInput, limit: 1}, function(err, data) {
+		spotify.search({ type: 'track', query: usersInput}, function(err, data) {
 
 		  	if (err) {
 		    	return console.log('Error occurred: ' + err);
@@ -108,7 +109,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
 
 
 
-	function findMovie(){
+	function findMovie(usersInput){
 
 		// Then run a request to the OMDB API with the movie specified
 		var queryUrl = "http://www.omdbapi.com/?t=" + usersInput + "&apikey=40e9cece";
@@ -150,13 +151,23 @@ for (var i = 3; i < nodeArgs.length; i++) {
 
 		var dataArray = data.split(",");
 
-			for (var i = 0; i < dataArray.length; i++){
 				command = dataArray[0];
-				// arg = dataArray[1]
-				console.log(command)
-				// console.log(arg)
-			};
-		
+
+				arg = dataArray[1];
+
+				arg = arg.substring(1, arg.length - 1);
+
+				if (command === "spotify-this-song") {
+					findSong(arg);
+				}
+
+				else if (command === "my-tweets") {
+					mytweets();
+				}
+				
+				else if(command === "movie-this"){
+					findMovie(arg);
+				}
 		});
 
 	};
