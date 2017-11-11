@@ -47,98 +47,127 @@ for (var i = 3; i < nodeArgs.length; i++) {
 };
 
 
-if(nodeArgs[2] === "my-tweets"){
-	mytweets();
-}
+	if(nodeArgs[2] === "my-tweets"){
+		mytweets();
+	}
 
-else if(nodeArgs[2] === "spotify-this-song"){
-	findSong();
-}
+	else if(nodeArgs[2] === "spotify-this-song"){
+		findSong();
+	}
 
-else if(nodeArgs[2] === "movie-this"){
-	findMovie();
-}
+	else if(nodeArgs[2] === "movie-this"){
+		findMovie();
+	}
 
-else if(nodeArgs[2] === "do-what-it-says"){
-	dowhatitsays();
-}
+	else if(nodeArgs[2] === "do-what-it-says"){
+		dowhatitsays();
+	}
 
-else(
-	console.log("Command not found.")
-);
+	else(
+		console.log("Command not found.")
+	);
 
 
-//Twitter function
-function mytweets(){
 
-	var prams = {
-		name: 'Peter Peck',
-		screen_name: 'pt_peck357'
-	};
+	//Twitter function
+	function mytweets(){
 
-	t.get('statuses/user_timeline', prams, function(error, tweets, response) {
-
-		if(error) throw error;
-
-		for (var i = 0; i < 20; i++) {
-
-			console.log((i+1) + "." + " Tweet: " + tweets[i].text);
-
-			console.log("Created at " + tweets[i].created_at);
-
-			console.log("");	
-
-			// console.log(tweets)		
+		var prams = {
+			name: 'Peter Peck',
+			screen_name: 'pt_peck357'
 		};
 
-	});
-};
+		t.get('statuses/user_timeline', prams, function(error, tweets, response) {
 
-function findSong(){
+			if(error) throw error;
 
-	spotify.search({ type: 'track', query: usersInput, limit: 10}, function(err, data) {
+			for (var i = 0; i < tweets.length; i++) {
 
-	  	if (err) {
+				console.log((i+1) + "." + " Tweet: " + tweets[i].text);
 
-	    	return console.log('Error occurred: ' + err);
+				console.log("Created at " + moment(tweets[i].created_at).format('MMMM DD, YYYY'));
 
-	  	}
+				console.log("");	
 
-		console.log("Artist/Band: " + data.tracks.items[0].artists[0].name);
-		console.log("Song Title: " + data.tracks.items[0].name);
-		console.log("Link: " + data.tracks.items[0].external_urls.spotify);
-		console.log("Album: " + data.tracks.items[0].album.name);
+			};
 
-	});
+		});
+
+	};
+
+
+
+	function findSong(){
+
+		spotify.search({ type: 'track', query: usersInput, limit: 10}, function(err, data) {
+
+		  	if (err) {
+
+		    	return console.log('Error occurred: ' + err);
+
+		  	}
+
+			console.log("Artist/Band: " + data.tracks.items[0].artists[0].name);
+			console.log("Song Title: " + data.tracks.items[0].name);
+			console.log("Link: " + data.tracks.items[0].external_urls.spotify);
+			console.log("Album: " + data.tracks.items[0].album.name);
+
+		});
+		
+	};
+
+
+
+	function findMovie(){
+
+		// Then run a request to the OMDB API with the movie specified
+		var queryUrl = "http://www.omdbapi.com/?t=" + usersInput + "&apikey=40e9cece";
+
+		request(queryUrl, function(error, response, body) {
+
+			// If the request is successful
+			if (!error && response.statusCode === 200) {
+
+				console.log("Title: " + JSON.parse(body).Title);
+				console.log("Release Date: " + JSON.parse(body).Year);
+				console.log("IMDB Rating: " + JSON.parse(body).imdbRating +"/10");
+				console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+				console.log("Country Produced: " + JSON.parse(body).Country);
+				console.log("Language: " + JSON.parse(body).Language);
+				console.log("Plot: " + JSON.parse(body).Plot);
+				console.log("Actors: " + JSON.parse(body).Actors);
+
+			}
+
+		});
+
+	};
 	
-};
 
-function findMovie(){
 
-	// Then run a request to the OMDB API with the movie specified
-	var queryUrl = "http://www.omdbapi.com/?t=" + usersInput + "&apikey=40e9cece";
 
-	request(queryUrl, function(error, response, body) {
+	function dowhatitsays(){
 
-		// If the request is successful
-		if (!error && response.statusCode === 200) {
+		var userString = "";
 
-			console.log("Title: " + JSON.parse(body).Title);
-			console.log("Release Date: " + JSON.parse(body).Year);
-			console.log("IMDB Rating: " + JSON.parse(body).imdbRating +"/10");
-			console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
-			console.log("Country Produced: " + JSON.parse(body).Country);
-			console.log("Language: " + JSON.parse(body).Language);
-			console.log("Plot: " + JSON.parse(body).Plot);
-			console.log("Actors: " + JSON.parse(body).Actors);
+		fs.readFile("random.txt", "utf8", function(error, data) {
 
-		}
+			if (error) {
+				return console.log(error);
+			};
 
-	});
 
-};
+		var dataArray = data.split(",");
 
-function dowhatitsays(){
+			for (var i = 0; i < dataArray.length; i++){
 
-};
+				userString = dataArray[i];
+
+				console.log(userString);
+
+			}
+		
+		});
+
+	};
 
