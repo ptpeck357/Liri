@@ -129,12 +129,17 @@ for (var i = 3; i < nodeArgs.length; i++) {
 				console.log("Title: " + JSON.parse(body).Title);
 				console.log("Release Date: " + JSON.parse(body).Year);
 				console.log("IMDB Rating: " + JSON.parse(body).imdbRating +"/10");
-				console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+
+				//checking if rotten tomatoes rating exists for this movie
+				try {var rating = JSON.parse(body).Ratings[1].Value;} catch(err) {}
+				if(rating){
+					console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+				}
+				
 				console.log("Country Produced: " + JSON.parse(body).Country);
 				console.log("Language: " + JSON.parse(body).Language);
 				console.log("Plot: " + JSON.parse(body).Plot);
 				console.log("Actors: " + JSON.parse(body).Actors);
-
 			};
 
 		});
