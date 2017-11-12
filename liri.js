@@ -160,9 +160,13 @@ for (var i = 3; i < nodeArgs.length; i++) {
 
 				command = dataArray[0];
 
-				arg = dataArray[1];
+				if (dataArray[1]) {
 
-				arg = arg.substring(1, arg.length - 1);
+					arg = dataArray[1];
+
+					arg = arg.substring(1, arg.length - 1);
+
+				}
 
 				if (command === "spotify-this-song") {
 					findSong(arg);
