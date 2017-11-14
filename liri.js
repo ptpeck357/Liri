@@ -60,7 +60,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
 	}
 
 	else if(nodeArgs[2] === "movie-this"){
-		findMovie(usersInput);
+		validateMovie(usersInput);
 	}
 
 	else if(nodeArgs[2] === "do-what-it-says"){
@@ -115,6 +115,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
 	};
 
 
+	//Tests whether or not the user inputed a value for song
 	function validateSong(usersInput){ 
 
 		if(usersInput){
@@ -123,6 +124,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
 
 		} else {
 
+			//Default song if user input for song is blank
 			usersInput = "The Sign Ace of Base";
 
 			findSong(usersInput)
@@ -143,12 +145,14 @@ for (var i = 3; i < nodeArgs.length; i++) {
 
 				console.log("Title: " + JSON.parse(body).Title);
 				console.log("Release Date: " + JSON.parse(body).Year);
-				console.log("IMDB Rating: " + JSON.parse(body).imdbRating +"/10");
+				console.log("IMDB Rating: " + JSON.parse(body).imdbRating + "/10");
 
 				//checking if rotten tomatoes rating exists for this movie
 				try {var rating = JSON.parse(body).Ratings[1].Value;} catch(err) {}
 				if(rating){
 					console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+				} else {
+					console.log("Rotten Tomatoes Rating: N/A");
 				}
 				
 				console.log("Country Produced: " + JSON.parse(body).Country);
@@ -161,6 +165,22 @@ for (var i = 3; i < nodeArgs.length; i++) {
 
 	};
 	
+	//Tests whether or not the user inputed a value for movie
+	function validateMovie(){
+
+		if(usersInput){
+
+			findMovie(usersInput);
+
+		} else {
+
+			//Default song if user input for movie is blank
+			usersInput = "Mr.Nobody";
+
+			findMovie(usersInput)
+
+		};
+	};
 
 
 
@@ -197,7 +217,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
 				}
 				
 				else if(command === "movie-this"){
-					findMovie(arg);
+					validateMovie(arg);
 				}
 		});
 
