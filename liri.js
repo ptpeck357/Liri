@@ -209,7 +209,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
 				}
 
 				if (command === "spotify-this-song") {
-					validateSong(arg);
+					findSong(arg);
 				}
 
 				else if (command === "my-tweets") {
@@ -217,7 +217,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
 				}
 				
 				else if(command === "movie-this"){
-					validateMovie(arg);
+					findMovie(arg);
 				}
 		});
 
