@@ -14,7 +14,9 @@ var twitter = require("twitter");
 var spotifySearch = require('node-spotify-api');
 
 var spotify = new spotifySearch({
+
 	id: '17aab725b284462aacfd997301bd07a1',
+
 	secret: '5f242864dd51446bbb52a6689191de3e'
 
 });
@@ -54,7 +56,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
 	}
 
 	else if(nodeArgs[2] === "spotify-this-song"){
-		findSong(usersInput);
+		validateSong(usersInput);
 	}
 
 	else if(nodeArgs[2] === "movie-this"){
@@ -77,7 +79,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
 		var prams = {
 			name: 'Peter Peck',
 			screen_name: 'pt_peck357',
-			limit: 20
+			count: 20
 		};
 
 		t.get('statuses/user_timeline', prams, function(error, tweets, response) {
@@ -96,7 +98,6 @@ for (var i = 3; i < nodeArgs.length; i++) {
 	};
 
 
-
 	function findSong(usersInput){
 
 		spotify.search({ type: 'track', query: usersInput}, function(err, data) {
@@ -110,8 +111,22 @@ for (var i = 3; i < nodeArgs.length; i++) {
 			console.log("Link: " + data.tracks.items[0].external_urls.spotify);
 			console.log("Album: " + data.tracks.items[0].album.name);
 
-		});
-		
+			});
+	};
+
+
+	function validateSong(usersInput){ 
+
+		if(usersInput){
+			
+			findSong(usersInput)
+
+		} else {
+
+			usersInput = "The Sign Ace of Base";
+
+			findSong(usersInput)
+		};
 	};
 
 
@@ -174,7 +189,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
 				}
 
 				if (command === "spotify-this-song") {
-					findSong(arg);
+					validateSong(arg);
 				}
 
 				else if (command === "my-tweets") {
