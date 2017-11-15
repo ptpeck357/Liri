@@ -1,10 +1,10 @@
-#Liri
+# Liri
 
-##Description
+## Description
 
 LIRI is an acronym for Language Interpretation and Recognition Interface. LIRI is a command line node app that takes in parameters and gives you back data for specific command. There are four commands for this app, my-tweets, spotify-this-song, movie-this, do-what-it-says.
 
-##Functionality
+## Functionality
 
 Entering the command first on the command line, each command does the following: 
 
