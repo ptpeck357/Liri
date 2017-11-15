@@ -35,10 +35,10 @@ Entering the command first on the command line, each command does the following:
 * Node
 * NPM(Node Packages Manager)
 	<h6>Packages used:</h6>
-	* FS
-	* request
-	* Twitter
-	* Node-spotify-api
+		* FS
+		* request
+		* Twitter
+		* Node-spotify-api
 	
 
 
