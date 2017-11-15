@@ -196,6 +196,7 @@ function dowhatitsays(){
 
 			command = dataArray[0];
 
+			//Checking to see if there is a second argument. 
 			if (dataArray[1]) {
 
 				arg = dataArray[1];
