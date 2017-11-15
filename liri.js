@@ -4,9 +4,6 @@ var fs = require("fs");
 //Node package to make HTTP requests
 var request = require("request");
 
-//Node package to access moment 
-var moment = require("moment");
-
 //Node package to access twitter api 
 var twitter = require("twitter");
 
@@ -88,7 +85,7 @@ function mytweets(){
 
 		for (var i = 0; i < tweets.length; i++) {
 			console.log((i+1) + "." + " Tweet: " + tweets[i].text);
-			console.log("Created at " + moment(tweets[i].created_at).format('MMMM Do YYYY'));
+			console.log("Posted at " + tweets[i].created_at);
 			console.log("");	
 		};
 
@@ -107,7 +104,7 @@ function findSong(usersInput){
 
 		console.log("Artist/Band: " + data.tracks.items[0].artists[0].name);
 		console.log("Song Title: " + data.tracks.items[0].name);
-		console.log("Link: " + data.tracks.items[0].external_urls.spotify);
+		console.log("Preview Link: " + data.tracks.items[0].external_urls.spotify);
 		console.log("Album: " + data.tracks.items[0].album.name);
 
 		});
