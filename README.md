@@ -34,7 +34,7 @@ Entering the command first on the command line, each command does the following:
 * JavaScript
 * Node
 * NPM(Node Packages Manager)
-	<h3>Packages used:</h3>
+	<h6>Packages used:</h6>
 	* FS
 	* request
 	* Twitter
